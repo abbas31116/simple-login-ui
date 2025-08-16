@@ -10,7 +10,8 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 
-
+import Footer from "./layouts/fotter";
+import CustomHeader from "./layouts/header";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -21,7 +22,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="bg-white">
+      <body className="bg-white ">
+        <CustomHeader />
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -49,7 +51,4 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     details = error.message;
     stack = error.stack;
   }
-
-
 }
-

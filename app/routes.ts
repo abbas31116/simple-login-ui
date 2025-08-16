@@ -1,9 +1,11 @@
 import { type RouteConfig, index, route } from "@react-router/dev/routes";
 
 export default [
-  index("routes/home.tsx"),
+  index("routes/create-a-store.tsx"),
   route("register", "routes/auth/register.tsx"),
-  route("login", "routes/auth/login.tsx"),
+  route("program", "routes/program.tsx"),
+  route("about-us", "routes/about.tsx"),
+  route(`advertise`, `routes/adv.tsx`),
 ] satisfies RouteConfig;
 
 //dadakdhalwpad

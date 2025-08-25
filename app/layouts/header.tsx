@@ -1,5 +1,3 @@
-import path from "path";
-import { title } from "process";
 import { useNavigate } from "react-router";
 
 const items = [

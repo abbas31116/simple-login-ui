@@ -17,7 +17,6 @@ export default function CustomHeader() {
             className="m-10 hover:cursor-pointer"
             key={`header-${index}`}
             onClick={() => {
-              console.log(item.path);
               nav(item.path);
             }}
           >

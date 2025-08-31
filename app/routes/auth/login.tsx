@@ -8,11 +8,11 @@ export default function login() {
     <div className="shadow-xl shadow-blue-800 w-150 h-150 ml-180 mt-50 rounded-4xl">
       <CustomButton3 title="back" onClick={() => nav(-1)} variant="secondary" />
       <CustomInput
-        labels={"block mt-10 ml-25 p-4  text-gray-500"}
+        placeHolder={"block mt-10 ml-25 p-4  text-gray-500"}
         title={"Email"}
       />
       <CustomInput
-        labels={"block mt-5 ml-25 p-4 text-gray-500"}
+        placeHolder={"block mt-5 ml-25 p-4 text-gray-500"}
         title={"Password"}
         placeholder="************"
       />

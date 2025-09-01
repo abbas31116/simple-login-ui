@@ -1,80 +1,95 @@
 import { useFormik } from "formik";
+import { useState } from "react";
 import { CustomButton3 } from "~/component/componentButton";
 import CustomInput from "~/component/componentInput";
-import { signupValidationSchema } from "~/validation/signup_validatiion";
+import { api } from "~/lib/axios";
+import { AUTH_BG, loginUrl } from "~/lib/constant";
+import { phoneValidationSchema } from "~/validation/signup_validatiion";
 
-interface Post {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
+enum AuthFormState {
+  GET_PHONE = "get phone",
+  OTP = "otp",
+  REGISTER = "register",
 }
+
+interface UserData {
+  created_at: string;
+  email: string;
+  first_name: string;
+  id: number;
+  last_name: string;
+  phone: string;
+  role: string;
+  updated_at: string;
+}
+
 export default function Home() {
-  const formik = useFormik({
+  const [authState, setAuthState] = useState<AuthFormState>(
+    AuthFormState.GET_PHONE
+  );
+  let userData: UserData | null = null;
+  const phoneFormik = useFormik({
     initialValues: {
-      email: "",
-      first_name: "",
-      last_name: "",
       phone: "",
-      password: "",
     },
     onSubmit(values, formikHelpers) {
-      console.log(values);
-      // send to server = http call
-
-      // ok
-      formikHelpers.resetForm();
+      api
+        .post("auth/signin", {
+          phone: values.phone,
+        })
+        .then((res) => {
+          if (res.status == 201) {
+            setAuthState(AuthFormState.OTP);
+            userData = res.data;
+          } else {
+          }
+        });
+      // formikHelpers.resetForm();
     },
-    validationSchema: signupValidationSchema,
+    validationSchema: phoneValidationSchema,
   });
+  const otpFormik = useFormik({
+    initialValues: {},
+    onSubmit(values, formikHelpers) {},
+  });
+  const registerFormik = useFormik({
+    initialValues: {},
+    onSubmit(values, formikHelpers) {},
+  });
+
   return (
-    <div className="w-screen h-screen place-content-center place-items-center bg-gray-100">
-      <div className="bg-white w-96 p-5 space-y-4 rounded-md shadow-md">
-        <p className="font-bold place-self-center">Welcom back</p>
-        <p className=" place-self-center">Lorem ipsum dolor sit amet</p>
-        <form className="space-y-4" onSubmit={formik.handleSubmit}>
-          <CustomInput
-            onChange={formik.handleChange}
-            value={formik.values.email}
-            name="email"
-            errorMsg={formik.errors.email}
-            title="Email Address"
-            placeHolder="Enter Your Email"
-          />
-          <CustomInput
-            name="first_name"
-            onChange={formik.handleChange}
-            errorMsg={formik.errors.first_name}
-            value={formik.values.first_name}
-            title="First Name"
-            placeHolder="Enter Your First Name"
-          />
-          <CustomInput
-            name="last_name"
-            onChange={formik.handleChange}
-            errorMsg={formik.errors.last_name}
-            value={formik.values.last_name}
-            title="Last Name"
-            placeHolder="Enter Your Last Name"
-          />
-          <CustomInput
-            name="phone"
-            onChange={formik.handleChange}
-            errorMsg={formik.errors.phone}
-            value={formik.values.phone}
-            title="Phone"
-            placeHolder="Enter Your Phone"
-          />
-          <CustomInput
-            name="password"
-            onChange={formik.handleChange}
-            errorMsg={formik.errors.password}
-            value={formik.values.password}
-            type="password"
-            title="Password"
-            placeHolder="Enter Your Password"
-          />
-          <CustomButton3 type="submit" title="Signup" className="w-full" />
+    <div className="w-screen h-screen grid grid-cols-2" dir="rtl">
+      <div className="bg-primary place-content-center place-items-center">
+        <img src={AUTH_BG} alt="" />
+      </div>
+      <div className="place-content-center place-items-center">
+        <form
+          className="space-y-4"
+          onSubmit={
+            authState == AuthFormState.GET_PHONE
+              ? phoneFormik.handleSubmit
+              : authState == AuthFormState.OTP
+                ? otpFormik.handleSubmit
+                : registerFormik.handleSubmit
+          }
+        >
+          <div className="h-40 w-40 bg-primary rounded-full place-self-center"></div>
+          <p className="font-black ">ورود</p>
+
+          {authState == AuthFormState.GET_PHONE && (
+            <>
+              <p className="text-gray-400">لطفا شماره تماس خود را وارد کنید</p>
+              <CustomInput
+                name="phone"
+                onChange={phoneFormik.handleChange}
+                value={phoneFormik.values.phone}
+                errorMsg={phoneFormik.errors.phone}
+                title="شماره تماس"
+                placeHolder="**** *** **۰۹"
+              />
+              <CustomButton3 type="submit" title="ثبت" className="w-full" />
+            </>
+          )}
         </form>
       </div>
     </div>

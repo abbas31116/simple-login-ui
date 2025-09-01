@@ -1,8 +1,7 @@
 import axios from "axios";
-import { error } from "console";
 
 const api = axios.create({
-  baseURL: "https://jsonplaceholder.typicode.com/",
+  baseURL: "https://dpaint.liara.run/api/v1/",
 });
 
 // api.interceptors.request.use((conf)=>{

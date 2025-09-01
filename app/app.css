@@ -13,3 +13,12 @@ body {
     color-scheme: light;
   }
 }
+
+@theme inline {
+  --color-primary: var(--primary);
+}
+
+
+:root {
+  --primary: #F15A22;
+}

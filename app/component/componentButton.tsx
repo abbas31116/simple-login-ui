@@ -15,7 +15,7 @@ function CustomButton3({
   return (
     <button
       onClick={onClick}
-      className={`${variant == "primary" ? "bg-blue-800 text-white" : "bg-white border-blue-800 border text-blue-800"}  px-8 py-3 rounded-br-4xl rounded-tl-4xl cursor-pointer ${className}`}
+      className={`${variant == "primary" ? "bg-primary text-white" : "bg-white border-primary border text-primary"}  px-8 py-3 rounded-md  cursor-pointer ${className}`}
     >
       {title}
     </button>

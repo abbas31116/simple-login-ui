@@ -9,14 +9,16 @@ interface ICustominput extends InputHTMLAttributes<HTMLInputElement> {
 function CustomInput({ placeHolder, errorMsg, title, ...props }: ICustominput) {
   return (
     <div>
-      <label>{title}</label>
+      <label className="block mb-1">{title}</label>
       <input
         type="text"
         placeholder={placeHolder}
         className={"border-2 border-gray-300 rounded-md w-80 p-2 "}
         {...props}
       />
-      {errorMsg && <label className="text-red-500 font-bold">{errorMsg}</label>}
+      {errorMsg && (
+        <label className="text-red-500 font-bold block">{errorMsg}</label>
+      )}
     </div>
   );
 }

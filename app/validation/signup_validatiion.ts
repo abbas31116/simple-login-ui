@@ -6,4 +6,5 @@ export const phoneValidationSchema = yup.object().shape({
     .required("Phone is reqiured")
     .min(11, "enter vaild phone")
     .max(11, "phone invalid"),
+    register:yup.string().required("")
 });

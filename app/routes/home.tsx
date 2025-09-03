@@ -46,6 +46,7 @@ export default function Home() {
       //   });
       setAuthState(AuthFormState.OTP);
       // formikHelpers.resetForm();
+      console.log("adsdada")
     },
     validationSchema: phoneValidationSchema,
   });
@@ -54,11 +55,16 @@ export default function Home() {
       user_id: null,
       phone: "",
       otp_code: "",
+     
     },
     onSubmit(values, formikHelpers) {},
   });
   const registerFormik = useFormik({
-    initialValues: {},
+    initialValues: {
+      f_name:"",
+      l_name:"",
+      email:"",
+    },
     onSubmit(values, formikHelpers) {},
   });
 
@@ -92,7 +98,7 @@ export default function Home() {
                 title="شماره تماس"
                 placeHolder="**** *** **۰۹"
               />
-              <CustomButton3 type="submit" title="ثبت" className="w-full" />
+              <CustomButton3 type="button" title="ثبت" className="w-full" />
             </>
           ) : authState == AuthFormState.OTP ? (
             <>
@@ -109,8 +115,29 @@ export default function Home() {
               />
               <CustomButton3 type="submit" title="ثبت" className="w-full" />
             </>
-          ) : (
-            <div></div>
+          ) :(
+            <>
+              <p className="text-gray-400">
+                ساخت اکانت
+              </p>
+              {/* <CustomInput 
+              name="register"
+              onChange={registerFormik.handleChange}
+              value={registerFormik.values.email}
+              errorMsg={registerFormik.errors.email}
+              title="ساخت اکانت"
+              placeHolder=""
+              />
+              <CustomInput
+                name="otp_code"
+                onChange={otpFormik.handleChange}
+                value={otpFormik.values.otp_code}
+                errorMsg={otpFormik.errors.otp_code}
+                title="کد احراز هویت"
+                placeHolder="******"
+              />
+              <CustomButton3 type="submit" title="ثبت" className="w-full" /> */}
+            </>
           )}
         </form>
       </div>

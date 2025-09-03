@@ -2,9 +2,8 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { CustomButton3 } from "~/component/componentButton";
 import CustomInput from "~/component/componentInput";
-import { api } from "~/lib/axios";
-import { AUTH_BG, loginUrl } from "~/lib/constant";
-import { phoneValidationSchema } from "~/validation/signup_validatiion";
+import { AUTH_BG } from "~/lib/constant";
+import { phoneValidationSchema, registerValidation } from "~/validation/signup_validatiion";
 
 enum AuthFormState {
   GET_PHONE = "get phone",
@@ -44,7 +43,7 @@ export default function Home() {
       //     } else {
       //     }
       //   });
-      setAuthState(AuthFormState.OTP);
+      setAuthState(AuthFormState.REGISTER);
       // formikHelpers.resetForm();
       console.log("adsdada")
     },
@@ -55,17 +54,21 @@ export default function Home() {
       user_id: null,
       phone: "",
       otp_code: "",
-     
+
     },
-    onSubmit(values, formikHelpers) {},
+    onSubmit(values, formikHelpers) { },
   });
   const registerFormik = useFormik({
     initialValues: {
-      f_name:"",
-      l_name:"",
-      email:"",
+      f_name: "",
+      l_name: "",
+      email: "",
     },
-    onSubmit(values, formikHelpers) {},
+    onSubmit(values, formikHelpers) {
+      setAuthState(AuthFormState.GET_PHONE);
+      formikHelpers.resetForm()
+    },
+    validationSchema: registerValidation
   });
 
   return (
@@ -98,7 +101,6 @@ export default function Home() {
                 title="شماره تماس"
                 placeHolder="**** *** **۰۹"
               />
-              <CustomButton3 type="button" title="ثبت" className="w-full" />
             </>
           ) : authState == AuthFormState.OTP ? (
             <>
@@ -113,32 +115,40 @@ export default function Home() {
                 title="کد احراز هویت"
                 placeHolder="******"
               />
-              <CustomButton3 type="submit" title="ثبت" className="w-full" />
             </>
-          ) :(
+          ) : (
             <>
               <p className="text-gray-400">
                 ساخت اکانت
               </p>
-              {/* <CustomInput 
-              name="register"
-              onChange={registerFormik.handleChange}
-              value={registerFormik.values.email}
-              errorMsg={registerFormik.errors.email}
-              title="ساخت اکانت"
-              placeHolder=""
+              <CustomInput
+                name="f_name"
+                onChange={registerFormik.handleChange}
+                value={registerFormik.values.f_name}
+                errorMsg={registerFormik.errors.f_name}
+                title="اسم"
+                placeHolder="john"
               />
               <CustomInput
-                name="otp_code"
-                onChange={otpFormik.handleChange}
-                value={otpFormik.values.otp_code}
-                errorMsg={otpFormik.errors.otp_code}
-                title="کد احراز هویت"
-                placeHolder="******"
+                name="l_name"
+                onChange={registerFormik.handleChange}
+                value={registerFormik.values.l_name}
+                errorMsg={registerFormik.errors.l_name}
+                title="فامیل"
+                placeHolder="morphin"
               />
-              <CustomButton3 type="submit" title="ثبت" className="w-full" /> */}
+              <CustomInput
+                name="email"
+                onChange={registerFormik.handleChange}
+                value={registerFormik.values.email}
+                errorMsg={registerFormik.errors.email}
+                title="ایمیل"
+                placeHolder="(اختیاری) johnmorphin@gmail.com"
+              />
             </>
           )}
+          <CustomButton3 type="submit" title="ثبت" className="w-full" />
+
         </form>
       </div>
     </div>

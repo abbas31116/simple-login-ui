@@ -6,5 +6,10 @@ export const phoneValidationSchema = yup.object().shape({
     .required("Phone is reqiured")
     .min(11, "enter vaild phone")
     .max(11, "phone invalid"),
-    register:yup.string().required("")
 });
+export const registerValidation = yup.object().shape({
+  f_name: yup.string().required("اسم اجباری"),
+  l_name: yup.string().required("فامیل اجباری"),
+  email: yup.string()
+
+})

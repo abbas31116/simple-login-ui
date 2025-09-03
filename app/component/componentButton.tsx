@@ -11,9 +11,11 @@ function CustomButton3({
   title,
   onClick,
   className,
+  type,
 }: ICustombutton) {
   return (
     <button
+      type={type}
       onClick={onClick}
       className={`${variant == "primary" ? "bg-primary text-white" : "bg-white border-primary border text-primary"}  px-8 py-3 rounded-md  cursor-pointer ${className}`}
     >

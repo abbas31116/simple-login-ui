@@ -44,9 +44,9 @@ export default function Home() {
       //     } else {
       //     }
       //   });
+      console.log("adsdada");
       setAuthState(AuthFormState.OTP);
       // formikHelpers.resetForm();
-      console.log("adsdada")
     },
     validationSchema: phoneValidationSchema,
   });
@@ -55,15 +55,14 @@ export default function Home() {
       user_id: null,
       phone: "",
       otp_code: "",
-     
     },
     onSubmit(values, formikHelpers) {},
   });
   const registerFormik = useFormik({
     initialValues: {
-      f_name:"",
-      l_name:"",
-      email:"",
+      f_name: "",
+      l_name: "",
+      email: "",
     },
     onSubmit(values, formikHelpers) {},
   });
@@ -98,7 +97,7 @@ export default function Home() {
                 title="شماره تماس"
                 placeHolder="**** *** **۰۹"
               />
-              <CustomButton3 type="button" title="ثبت" className="w-full" />
+              <CustomButton3 type="submit" title="ثبت" className="w-full" />
             </>
           ) : authState == AuthFormState.OTP ? (
             <>
@@ -115,11 +114,9 @@ export default function Home() {
               />
               <CustomButton3 type="submit" title="ثبت" className="w-full" />
             </>
-          ) :(
+          ) : (
             <>
-              <p className="text-gray-400">
-                ساخت اکانت
-              </p>
+              <p className="text-gray-400">ساخت اکانت</p>
               {/* <CustomInput 
               name="register"
               onChange={registerFormik.handleChange}

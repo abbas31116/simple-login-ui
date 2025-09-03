@@ -33,23 +33,28 @@ export default function Home() {
       phone: "",
     },
     onSubmit(values, formikHelpers) {
-      api
-        .post("auth/signin", {
-          phone: values.phone,
-        })
-        .then((res) => {
-          if (res.status == 201) {
-            setAuthState(AuthFormState.OTP);
-            userData = res.data;
-          } else {
-          }
-        });
+      // api
+      //   .post("auth/signin", {
+      //     phone: values.phone,
+      //   })
+      //   .then((res) => {
+      //     if (res.status == 201) {
+      //       setAuthState(AuthFormState.OTP);
+      //       userData = res.data;
+      //     } else {
+      //     }
+      //   });
+      setAuthState(AuthFormState.OTP);
       // formikHelpers.resetForm();
     },
     validationSchema: phoneValidationSchema,
   });
   const otpFormik = useFormik({
-    initialValues: {},
+    initialValues: {
+      user_id: null,
+      phone: "",
+      otp_code: "",
+    },
     onSubmit(values, formikHelpers) {},
   });
   const registerFormik = useFormik({
@@ -76,7 +81,7 @@ export default function Home() {
           <div className="h-40 w-40 bg-primary rounded-full place-self-center"></div>
           <p className="font-black ">ورود</p>
 
-          {authState == AuthFormState.GET_PHONE && (
+          {authState == AuthFormState.GET_PHONE ? (
             <>
               <p className="text-gray-400">لطفا شماره تماس خود را وارد کنید</p>
               <CustomInput
@@ -89,9 +94,30 @@ export default function Home() {
               />
               <CustomButton3 type="submit" title="ثبت" className="w-full" />
             </>
+          ) : authState == AuthFormState.OTP ? (
+            <>
+              <p className="text-gray-400">
+                کد وارد شده به شماره ی {phoneFormik.values.phone} وارد کنید
+              </p>
+              <CustomInput
+                name="otp_code"
+                onChange={otpFormik.handleChange}
+                value={otpFormik.values.otp_code}
+                errorMsg={otpFormik.errors.otp_code}
+                title="کد احراز هویت"
+                placeHolder="******"
+              />
+              <CustomButton3 type="submit" title="ثبت" className="w-full" />
+            </>
+          ) : (
+            <div></div>
           )}
         </form>
       </div>
     </div>
   );
 }
+
+// first_name -> req
+//last_name ->>req
+//email ->optional

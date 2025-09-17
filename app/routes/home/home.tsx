@@ -1,56 +1,44 @@
-import { useReducer } from "react";
+import { useContext, useReducer, useState } from "react";
 import { cartReducer, type ProductType } from "./reduer";
 import { CustomButton3 } from "~/component/componentButton";
+import { ThemeContext } from "~/lib/context/theme_context";
+
+import { userContext } from "~/component/providers/user_provider";
+import CustomInput from "~/component/componentInput";
 
 export default function Home() {
   const [state, dispatch] = useReducer(cartReducer, { items: [] });
+  const [value, setValue] = useState("");
 
-  const produts: ProductType[] = [
-    { id: 1, name: "Product 1", price: 100 },
-    { id: 2, name: "Product 2", price: 200 },
-    { id: 3, name: "Product 3", price: 300 },
-  ];
+  const userCtx = useContext(userContext);
+  if (!userCtx) throw new Error("UserProvider is missing!");
+
+  const { user, setUser } = userCtx;
 
   return (
     <div className="p-10">
-      <h1>Products </h1>
-      <div className="grid grid-cols-3">
-        {produts.map((product) => (
-          <div key={product.id}>
-            <h2>{product.name}</h2>
-            <p>{product.price}</p>
-            <button
-              className="bg-gray-200 rounded-md p-3"
-              onClick={() => dispatch({ type: "add", payload: product })}
-            >
-              add product
-            </button>
-          </div>
-        ))}
+      <div
+        className="place-content-center place-items-center w-screen h-96
+      "
+      >
+        <h1>name : {user.name}</h1>
+        <h1>last name : {user.last_name}</h1>
       </div>
-      <div className="flex items-center gap-4">
-        <h1 className="my-6 font-black text-2xl">Cart</h1>
-        <CustomButton3
-          title="clear"
-          onClick={() => dispatch({ type: "clear" })}
-        />
-      </div>
-      {state.items.length === 0 && <h2>Cart is empty</h2>}
-      {state.items.map((item) => {
-        return (
-          <div key={item.id}>
-            <h2>{item.name}</h2>
-            <p>{item.price * item.quantity}</p>
-            <p>qyantity:{item.quantity}</p>
-            <button
-              className="bg-gray-200 rounded-md p-3"
-              onClick={() => dispatch({ type: "remove", payload: item.id })}
-            >
-              remove product
-            </button>
-          </div>
-        );
-      })}
+      <CustomInput
+        onChange={(e) => {
+          if (e) {
+            setValue(e.target.value);
+          }
+        }}
+        title="name"
+        placeHolder="name"
+      />
+      <CustomButton3
+        title="update"
+        onClick={() => {
+          setUser({ ...user, name: value });
+        }}
+      />
     </div>
   );
 }

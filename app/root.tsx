@@ -12,6 +12,7 @@ import "./app.css";
 
 import Footer from "./layouts/fotter";
 import CustomHeader from "./layouts/header";
+import { UserProvider } from "./component/providers/user_provider";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -23,8 +24,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="bg-white ">
+        <UserProvider>{children}</UserProvider>
         {/* <CustomHeader /> */}
-        {children}
+
         <ScrollRestoration />
         <Scripts />
       </body>
